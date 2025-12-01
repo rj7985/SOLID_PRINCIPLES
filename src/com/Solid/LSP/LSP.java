@@ -94,7 +94,6 @@ class fixedAccount extends  dipositeOnly
 	
 }
 
-
  class Client
  {
 	
@@ -124,11 +123,7 @@ class fixedAccount extends  dipositeOnly
 		 }
 	 }
 	 
-	  
-	 
-	 
        }
-
 
 public class LSP {
 	
@@ -152,7 +147,4 @@ public class LSP {
 		c.transactionProcess();
 		
 	}
-	
-	
-
 }
