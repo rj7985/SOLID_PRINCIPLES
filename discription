@@ -1,0 +1,121 @@
+SOLID Principles (With Clean Examples)
+
+Modern software development requires code that is easy to maintain, extend, and debug.
+If design principles are not followed, it often results in:
+❌ Poor maintainability
+❌ Low readability
+❌ Frequent bugs and regressions
+
+SOLID principles help us fix these issues by guiding us to write clean, scalable, and flexible code.
+
+SOLID Principles Overview
+Letter	Principle	Meaning
+S	Single Responsibility	A class should have only one reason to change
+O	Open/Closed	Open for extension, closed for modification
+L	Liskov Substitution	Subclasses should behave like the parent class
+I	Interface Segregation	No class should implement methods it doesn’t need
+D	Dependency Inversion	Depend on abstractions, not concrete classes
+
+
+================
+
+✅ Explanation of Problems & Fixes (For README)
+1. Single Responsibility Principle (SRP)
+❌ What was wrong
+
+ShoppingCart class was doing multiple things:
+
+price calculation
+
+invoice printing
+
+saving to DB
+
+Any change in printing or DB logic forces changes inside ShoppingCart.
+
+Code becomes tightly coupled and hard to maintain.
+
+✔️ How it was solved
+
+Split responsibilities into separate classes:
+
+ShoppingCart → only price calculation
+
+CartInvoicePrinter → only printing invoice
+
+SaveToDB → only persistence
+
+Each class now has one clear job, making the system easier to modify without breaking other features.
+
+
+
+====================
+
+2. Open/Closed Principle (OCP)
+❌ What was wrong
+
+When storing data into new systems (MySQL, MongoDB, File System),
+you would need to keep adding new methods inside the same class, like:
+
+saveToMySQL();
+saveToMongo();
+saveToFile();
+
+
+This means:
+
+Existing class must be modified every time a new storage is added.
+
+High risk of breaking working code.
+
+Violates OCP: closed for modification.
+
+✔️ How it was solved
+
+Introduced an abstract class SaveToDB.
+
+Created new child classes for each storage type:
+
+SaveToMySQL
+
+SaveToMongo
+
+SaveToFileSystem
+
+Now to add a new storage (like Oracle or Cloud),
+you only create a new class, without touching existing ones.
+
+➡️ Existing code remains unchanged. Only extensions are added.
+
+==================
+
+
+3. Liskov Substitution Principle (LSP)
+❌ What was wrong
+
+FixedAccount extended Account but threw an exception in withdraw().
+
+This means:
+
+Child class cannot fully act like the parent.
+
+Client uses Account but receives unexpected behavior.
+
+Violates LSP because subclass broke the parent contract.
+
+✔️ How it was solved
+
+Restructured the class hierarchy:
+
+NoWithdrawableAccount → only deposit()
+
+WithdrawableAccount → deposit() + withdraw()
+
+Savings and Current accounts inherit WithdrawableAccount.
+
+FixedAccount inherits NoWithdrawableAccount.
+
+➡️ Now client code never gets a “withdraw not allowed” exception.
+➡️ Every subclass behaves exactly as the parent promises.
+
+
